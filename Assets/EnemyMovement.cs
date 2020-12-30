@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
-public class EnemyMovement : MonoBehaviour
+public class EnemyMovement : NetworkBehaviour
 {
 
     Vector3 destination;
@@ -21,10 +22,13 @@ public class EnemyMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Vector3.Distance(transform.position, destination) < 1)
+        if (isServer)
         {
-            destination = GetRandomPosition();
+            if (Vector3.Distance(transform.position, destination) < 1)
+            {
+                destination = GetRandomPosition();
+            }
+            transform.position = Vector3.MoveTowards(transform.position, destination, Time.fixedDeltaTime);
         }
-        transform.position = Vector3.MoveTowards(transform.position, destination,  5 * Time.fixedDeltaTime);
     }
 }

@@ -8,6 +8,8 @@ public class EnemySpawner : NetworkBehaviour
 
     public GameObject enemyPrefab;
 
+    public int enemies; 
+
     public override void OnStartServer()
     {
         base.OnStartServer();
@@ -29,7 +31,7 @@ public class EnemySpawner : NetworkBehaviour
     {
         Debug.Log($"Spawn && isServer: {isServer}");
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < enemies; i++)
         {
             GameObject enemyInstance = Instantiate(enemyPrefab, Random.insideUnitCircle * 5, Quaternion.identity);
             NetworkServer.Spawn(enemyInstance);
